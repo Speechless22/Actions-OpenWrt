@@ -22,6 +22,8 @@ on:
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
+  OPENCLASH_REPO_URL: https://github.com/vernesong/OpenClash.git
+  OPENCLASH_REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
   DIY_P1_SH: diy-part1.sh
@@ -59,7 +61,9 @@ jobs:
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
+        git clone --depth 1 $OPENCLASH_REPO_URL -b $OPENCLASH_REPO_BRANCH openclash
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        ln -sf /workdir/openclash $GITHUB_WORKSPACE/openclash
 
     - name: Load custom feeds
       run: |
@@ -81,6 +85,9 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+
+    - name: Load the OpenClash package
+      run: cd openclash && mv luci-app-openclash openwrt/package
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
