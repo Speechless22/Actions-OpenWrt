@@ -100,14 +100,16 @@ jobs:
       id: toolchain
       run: |
         cd openwrt
-        make tools/install V=s
-        make toolchain/install V=s
+        echo -e "$(nproc) thread compile"
+        make tools/install -j$(nproc) V=s || make tools/install -j1 V=s
+        make toolchain/install -j$(nproc) V=s || make toolchain/install -j1 V=s
         
     - name: Compile the luci-base
       id: luci
       run: |
         cd openwrt
-        make package/feeds/luci/luci-base/compile V=s
+        echo -e "$(nproc) thread compile"
+        make package/feeds/luci/luci-base/compile -j$(nproc) V=s || make package/feeds/luci/luci-base/compile -j1 V=s
 
     - name: Compile the firmware
       id: compile
