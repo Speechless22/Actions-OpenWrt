@@ -96,6 +96,13 @@ jobs:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         
+    - name: Compile the toolchain
+      id: toolchain
+      run: |
+        cd openwrt
+        make tools/install
+        make toolchain/install
+        
     - name: Compile the kernel
       id: kernel
       run: |
