@@ -103,8 +103,8 @@ jobs:
         make tools/install
         make toolchain/install
         
-    - name: Compile the kernel
-      id: kernel
+    - name: Compile the luci-base
+      id: luci
       run: |
         cd openwrt
         make package/feeds/luci/luci-base/compile V=s
