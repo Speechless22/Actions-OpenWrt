@@ -106,7 +106,7 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
         
     - name: Compile the kernel
-      id: compile
+      id: kernel
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
