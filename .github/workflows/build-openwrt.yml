@@ -106,8 +106,7 @@ jobs:
       id: kernel
       run: |
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make package/feeds/luci/luci-base/compile -j$(nproc) || make package/feeds/luci/luci-base/compile -j1 || make package/feeds/luci/luci-base/compile -j1 V=s
+        make package/feeds/luci/luci-base/compile V=s
 
     - name: Compile the firmware
       id: compile
