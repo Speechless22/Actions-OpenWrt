@@ -101,7 +101,8 @@ jobs:
       run: |
         cd openwrt
         make defconfig
-        make download -j8
+        echo -e "$(nproc) thread compile"
+        make download -j$(nproc) V=s
         
     - name: Compile the toolchain
       id: toolchain
