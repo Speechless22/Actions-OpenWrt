@@ -12,37 +12,46 @@
 name: Update Checker
 
 env:
-  REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
+  REPO_URL: https://github.com/vernesong/OpenClash.git
   REPO_BRANCH: master
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: 0 0 1 * *
+  release:
+    types: [published]
 
 jobs:
   check:
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: Get Commit Hash
-      id: getHash
-      run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
-        echo "commitHash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+    
+    - name: Get Latest Release
+      uses: actions/github-script@main
+      id: getLatestRelease
+      with:
+        script: |
+          const { data } = await github.repos.getLatestRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          })
+          console.log(JSON.stringify(data))
+          console.log(`tagName=${data.tag_name}`)
+          console.log(`commitHash=${data.target_commitish}`)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Compare Commit Hash
       id: cacheHash
       uses: actions/cache@main
       with:
         path: .commitHash
-        key: HEAD-${{ steps.getHash.outputs.commitHash }}
+        key: HEAD-${{ steps.getLatestRelease.outputs.commitHash }}
 
     - name: Save New Commit Hash
       if: steps.cacheHash.outputs.cache-hit != 'true'
       run: |
-        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+        echo ${{ steps.getLatestRelease.outputs.commitHash }} | tee .commitHash
 
     - name: Trigger build
       if: steps.cacheHash.outputs.cache-hit != 'true'
