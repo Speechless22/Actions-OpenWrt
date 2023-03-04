@@ -32,8 +32,8 @@ jobs:
       with:
         script: |
           const { data } = await github.repos.getLatestRelease({
-            owner: context.repo.owner,
-            repo: context.repo.repo
+            owner: 'vernesong',
+            repo: 'OpenClash'
           })
           console.log(JSON.stringify(data))
           console.log(`tagName=${data.tag_name}`)
