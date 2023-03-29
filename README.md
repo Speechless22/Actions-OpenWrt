@@ -8,6 +8,9 @@
 
 A template for building OpenWrt with GitHub Actions
 
+## 添加的包
+### luci-app-openclash dockerd docker-compose luci-app-dockerman
+
 ## Usage
 
 - Click the [Use this template](https://github.com/P3TERX/Actions-OpenWrt/generate) button to create a new repository.
