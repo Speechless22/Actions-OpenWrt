@@ -49,7 +49,6 @@ jobs:
       run: |
         [ -e $FEEDS_CONF ] && cp $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_FEEDS_SH
-        cd openwrt
         $GITHUB_WORKSPACE/$DIY_FEEDS_SH
 
     - name: Update feeds
@@ -63,7 +62,7 @@ jobs:
         [ -e $DIFFCONFIG_FILE ] && cp $DIFFCONFIG_FILE openwrt/.config
         chmod +x $DIY_SH
         $GITHUB_WORKSPACE/$DIY_SH
-        make defconfig
+        cd openwrt && make defconfig
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
