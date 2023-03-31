@@ -1,7 +1,7 @@
 name: Update Checker
 
 env:
-  REPO_URL: https://github.com/vernesong/OpenClash.git
+  REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
 
 on:
@@ -18,7 +18,7 @@ jobs:
     - name: Get Latest Tag
       id: getTag
       run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
+        git clone --depth 1 --branch $REPO_BRANCH $REPO_URL
         echo "latestTag=$(git tag)" >> $GITHUB_OUTPUT
 
     - name: Compare Tag
@@ -26,7 +26,7 @@ jobs:
       uses: actions/cache@main
       with:
         path: .latestTag
-        key: HEAD-${{ steps.getTag.outputs.latestTag }}
+        key: TAG-${{ steps.getTag.outputs.latestTag }}
 
     - name: Save New Tag
       if: steps.cacheTag.outputs.cache-hit != 'true'
