@@ -8,7 +8,7 @@ A template for building OpenWrt with GitHub Actions
 
 ## 添加的包
 
-luci-app-openclash luci-app-dockerman luci-ssl-openssl git-http dockerd docker-compose
+luci-app-diskman luci-app-openclash luci-app-dockerman luci-ssl-openssl git-http dockerd docker-compose 
 
 ## Usage
 
