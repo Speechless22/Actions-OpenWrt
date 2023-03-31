@@ -18,7 +18,7 @@ jobs:
     - name: Get Latest Tag
       id: getTag
       run: |
-        git clone --depth 1 --branch $REPO_BRANCH $REPO_URL
+        git clone --depth 1 --branch $REPO_BRANCH $REPO_URL .
         echo "latestTag=$(git tag)" >> $GITHUB_OUTPUT
 
     - name: Compare Tag
