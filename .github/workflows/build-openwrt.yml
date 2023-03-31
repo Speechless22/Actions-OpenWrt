@@ -49,7 +49,7 @@ jobs:
       run: |
         [ -e $FEEDS_CONF ] && cp $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_FEEDS_SH
-        $GITHUB_WORKSPACE/$DIY_FEEDS_SH
+        cd openwrt && $GITHUB_WORKSPACE/$DIY_FEEDS_SH
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
