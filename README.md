@@ -7,7 +7,7 @@
 Building OpenWrt with GitHub Actions
 
 ## 添加的包
-- 官方：luci-app-dockerman luci-ssl-openssl git-http dockerd docker-compose
+- 官方：luci-app-hd-idle luci-app-samba4 luci-app-aria2 luci-app-dockerman luci-ssl-openssl git-http dockerd docker-compose
 - 非官方：luci-app-diskman luci-app-openclash
 
 ## Usage
