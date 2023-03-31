@@ -18,7 +18,7 @@ jobs:
     - name: Get Latest Tag
       id: getTag
       run: |
-        git clone --branch $REPO_BRANCH $REPO_URL
+        git clone --branch $REPO_BRANCH $REPO_URL .
         echo "latestTag=$(git tag --sort=-creatordate | head -n1)" >> $GITHUB_OUTPUT
 
     - name: Compare Tag
