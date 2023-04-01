@@ -19,6 +19,7 @@ env:
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
 
 jobs:
   build:
@@ -37,6 +38,7 @@ jobs:
         sudo -E apt-get -qq install build-essential clang flex bison g++ gawk gcc-multilib gettext git libncurses5-dev libssl-dev python3-distutils rsync unzip zlib1g-dev file wget
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
 
     - name: Clone source code
       run: |
