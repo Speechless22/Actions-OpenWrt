@@ -7,7 +7,7 @@ env:
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 0 * * *
+    - cron: 0 16 * * *
 
 jobs:
   check:
@@ -26,7 +26,7 @@ jobs:
       uses: actions/cache@main
       with:
         path: .latestTag
-        key: TAG-${{ steps.getTag.outputs.latestTag }}
+        key: OpenWrt-${{ steps.getTag.outputs.latestTag }}
 
     - name: Save New Tag
       if: steps.cacheTag.outputs.cache-hit != 'true'

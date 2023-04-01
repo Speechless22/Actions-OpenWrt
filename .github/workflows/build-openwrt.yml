@@ -12,10 +12,9 @@ on:
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  DIFFCONFIG_FILE: diffconfig
   DIY_FEEDS_SH: diy-feeds.sh
-  DIY_SH: diy.sh
+  DIY_PACKAGES_SH: diy-packages.sh
+  DIY_CONFIG_SH: diy-config.sh
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -44,25 +43,32 @@ jobs:
       run: |
         df -hT $PWD
         git clone --branch $REPO_BRANCH $REPO_URL
+      
+    - name: Select a specific code revision
+      run: cd openwrt && git checkout $(git tag --sort=-creatordate | head -n1)
 
     - name: Load custom feeds
       run: |
-        [ -e $FEEDS_CONF ] && cp $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_FEEDS_SH
         cd openwrt && $GITHUB_WORKSPACE/$DIY_FEEDS_SH
 
-    - name: Update feeds
-      run: cd openwrt && ./scripts/feeds update -a
+    - name: Update&Install feeds
+      run: |
+        cd openwrt && ./scripts/feeds update -a
+        ./scripts/feeds install -a
 
-    - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
+    - name: Load custom packages
+      run: |
+        chmod +x $DIY_PACKAGES_SH
+        $GITHUB_WORKSPACE/$DIY_PACKAGES_SH
 
     - name: Load custom configuration
       run: |
-        [ -e $DIFFCONFIG_FILE ] && cp $DIFFCONFIG_FILE openwrt/.config
-        chmod +x $DIY_SH
-        $GITHUB_WORKSPACE/$DIY_SH
-        cd openwrt && make defconfig
+        chmod +x $DIY_CONFIG_SH
+        cd openwrt
+        wget https://downloads.openwrt.org/releases/$(git tag --sort=-creatordate | head -n1 | cut -c2-)/targets/x86/64/config.buildinfo -O .config        
+        $GITHUB_WORKSPACE/$DIY_CONFIG_SH
+        make defconfig
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
