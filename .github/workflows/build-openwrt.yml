@@ -32,8 +32,8 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(cat depends-ubuntu)
+        sudo apt update
+        sudo apt install $(cat depends-ubuntu)
         sudo timedatectl set-timezone "$TZ"
 
     - name: Clone source code
