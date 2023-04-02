@@ -64,7 +64,7 @@ jobs:
       run: |
         chmod +x $DIY_CONFIG_SH
         cd openwrt
-        wget https://downloads.openwrt.org/releases/$(git tag --sort=-creatordate | head -n1 | cut -c2-)/targets/x86/64/config.buildinfo -O .config        
+        wget https://downloads.openwrt.org/releases/$(git tag --sort=-creatordate | head -n1 | cut -c2-)/targets/x86/64/config.buildinfo -O .config
         $GITHUB_WORKSPACE/$DIY_CONFIG_SH
         make defconfig
 
