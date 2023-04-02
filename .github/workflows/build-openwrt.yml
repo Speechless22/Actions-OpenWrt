@@ -12,7 +12,7 @@ on:
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
-  DEPLIST: depends-ubuntu.txt
+  DEPENDENCIES: dependencies-ubuntu.txt
   DIY_FEEDS_SH: diy-feeds.sh
   DIY_PACKAGES_SH: diy-packages.sh
   DIY_CONFIG_SH: diy-config.sh
@@ -34,7 +34,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo apt update
-        sudo apt install $(cat $(DEPLIST))
+        sudo apt install $(cat $(DEPENDENCIES))
         sudo timedatectl set-timezone "$TZ"
 
     - name: Clone source code
