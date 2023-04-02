@@ -33,11 +33,10 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo apt update
-        sudo apt install $(cat $DEPENDENCIES)
+        sudo apt update && sudo apt install $(cat $DEPENDENCIES)
         sudo timedatectl set-timezone "$TZ"
 
-    - name: Clone source code
+    - name: Download the sources
       run: |
         df -hT $PWD
         git clone --branch $REPO_BRANCH $REPO_URL
@@ -50,23 +49,19 @@ jobs:
         chmod +x $DIY_FEEDS_SH
         cd openwrt && $GITHUB_WORKSPACE/$DIY_FEEDS_SH
 
-    - name: Update & Install feeds
-      run: |
-        cd openwrt && ./scripts/feeds update -a
-        ./scripts/feeds install -a
+    - name: Update the feeds
+      run: cd openwrt && ./scripts/feeds update -a && ./scripts/feeds install -a
 
     - name: Load custom packages
       run: |
         chmod +x $DIY_PACKAGES_SH
         $GITHUB_WORKSPACE/$DIY_PACKAGES_SH
 
-    - name: Load custom configuration
+    - name: Configure the firmware image
       run: |
         chmod +x $DIY_CONFIG_SH
-        cd openwrt
-        wget https://downloads.openwrt.org/releases/$(git describe --tags --abbrev=0 --exact-match | cut -c2-)/targets/x86/64/config.buildinfo -O .config
+        cd openwrt && wget https://downloads.openwrt.org/releases/$(git describe --tags --abbrev=0 --exact-match | cut -c2-)/targets/x86/64/config.buildinfo -O .config
         $GITHUB_WORKSPACE/$DIY_CONFIG_SH
-        make defconfig
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
@@ -75,12 +70,11 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
                
-    - name: Pre-Downloading & Building
+    - name: Build the firmware image
       id: compile
       run: |
-        cd openwrt
         echo -e "$(nproc) thread compile"
-        IGNORE_ERRORS=m make -j$(($(nproc)+1)) download world || IGNORE_ERRORS=m make -j1 download world V=s
+        cd openwrt && IGNORE_ERRORS=m make -j$(($(nproc)+1)) defconfig download world || IGNORE_ERRORS=m make -j1 defconfig download world V=s
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
