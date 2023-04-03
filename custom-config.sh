@@ -1,6 +1,3 @@
-# 使用官方.config文件
-#wget https://downloads.openwrt.org/releases/$(git describe --tags --abbrev=0 --exact-match | cut -c2-)/targets/x86/64/config.buildinfo -O .config
-
 # 利用make defconfig生成基础.config文件
 echo 'CONFIG_TARGET_x86=y' >> .config
 echo 'CONFIG_TARGET_x86_64=y' >> .config
