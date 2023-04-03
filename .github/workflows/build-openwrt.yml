@@ -70,8 +70,8 @@ jobs:
     - name: Build the firmware image
       id: compile
       run: |
-        echo -e "$(nproc) thread compile"
-        cd openwrt && IGNORE_ERRORS=m make -j$(($(nproc)+1)) defconfig download clean world || IGNORE_ERRORS=m make -j1 defconfig download clean world V=w
+        cd openwrt && echo -e "$(nproc) thread compile"
+        IGNORE_ERRORS=m make -j$(($(nproc)+1)) defconfig download clean world || IGNORE_ERRORS=m make -j1 defconfig download clean world V=w
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
