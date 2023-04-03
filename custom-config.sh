@@ -1,3 +1,7 @@
+# 使用官方.config文件
+wget https://downloads.openwrt.org/releases/$(git describe --tags --abbrev=0 --exact-match | cut -c2-)/targets/x86/64/config.buildinfo -O .config
+
+# 附加更改到.config文件
 #echo '# CONFIG_PACKAGE_dnsmasq is not set' >> .config
 #echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> .config
 #echo 'CONFIG_PACKAGE_docker-compose=y' >> .config
