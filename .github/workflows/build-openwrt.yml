@@ -36,6 +36,8 @@ jobs:
       run: |
         sudo apt -qq update && sudo apt -qq upgrade
         sudo apt -qq install $(cat $DEPENDENCIES)
+        sudo apt -qq autoremove --purge
+        sudo apt -qq clean
         sudo timedatectl set-timezone "$TZ"
         chmod +x custom-*.sh
 
