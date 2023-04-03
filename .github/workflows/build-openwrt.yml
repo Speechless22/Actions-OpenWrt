@@ -44,8 +44,8 @@ jobs:
     - name: Download the sources
       run: git clone --branch $REPO_BRANCH $REPO_URL
       
-#    - name: Select a specific code revision
-#      run: cd openwrt && git checkout $(git tag --sort=-creatordate | head -n1)
+    - name: Select a specific code revision
+      run: cd openwrt && git checkout $(git tag --sort=-creatordate | head -n1)
 
     - name: Load custom feeds
       run: cd openwrt && $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
