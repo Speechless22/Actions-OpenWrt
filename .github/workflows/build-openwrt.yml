@@ -34,8 +34,8 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo apt update && sudo apt upgrade
-        sudo apt install $(cat $DEPENDENCIES)
+        sudo apt -qq update && sudo apt -qq upgrade
+        sudo apt -qq install $(cat $DEPENDENCIES)
         sudo timedatectl set-timezone "$TZ"
         chmod +x custom-*.sh
 
