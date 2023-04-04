@@ -6,10 +6,6 @@
 
 Building OpenWrt with GitHub Actions
 
-## Usage
-
-
-
 ## Tips
 
 - Before create repository to build your own firmware, you may check out if others have already built it which meet your needs by simply [search `Actions-Openwrt` in GitHub](https://github.com/search?q=Actions-openwrt).
