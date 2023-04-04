@@ -8,15 +8,17 @@ on:
         description: 'SSH connection to Actions'
         required: true
         default: 'false'
+        type: choice
         options:
           true:
-            description: 'Enable SSH connection to Actions'
+            description: 'Enable SSH connection'
           false:
-            description: 'Disable SSH connection to Actions'
+            description: 'Disable SSH connection'
       version:
         description: 'OpenWrt version'
         required: true
         default: 'stable'
+        type: choice
         options:
           stable:
             description: 'OpenWrt stable version'
