@@ -119,18 +119,21 @@ jobs:
         name: OpenWrt_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Generate release tag
+    - name: Generate stable Release Tag
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'stable'
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
-      else if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'snapshot'
+
+    - name: Generate snapshot Release Tag
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'snapshot'
       run: |
         echo "release_tag=SNAPSHOT_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
-    - name: Upload firmware to release
+    - name: Upload firmware to Release
       uses: softprops/action-gh-release@master
       if: steps.tag.outputs.status == 'success'
       env:
