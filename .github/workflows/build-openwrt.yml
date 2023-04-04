@@ -47,6 +47,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        $PWD
         sudo apt-get -qq update && sudo apt-get -qq upgrade
         sudo apt-get -qq install $(cat $DEPENDENCIES)
         sudo apt-get -qq autoremove --purge
