@@ -125,7 +125,7 @@ jobs:
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
-      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'snapshot'
+      else if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'snapshot'
       run: |
         echo "release_tag=SNAPSHOT_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
