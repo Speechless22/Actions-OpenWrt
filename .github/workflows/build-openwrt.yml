@@ -10,8 +10,8 @@ on:
         default: 'false'
         type: choice
         options:
-        - true: Enable SSH connection
         - false: Disable SSH connection
+        - true: Enable SSH connection
       version:
         description: 'OpenWrt version'
         required: true
