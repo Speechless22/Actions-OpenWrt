@@ -25,7 +25,7 @@ env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
   DEPENDENCIES: dependencies-ubuntu.txt
-  BUILDROOT: /home/runner/work/Actions-OpenWrt/Actions-OpenWrt/openwrt
+  BUILDROOT: ${{ env.GITHUB_WORKSPACE }}/openwrt
   CUSTOM_FEEDS_SH: custom-feeds.sh
   CUSTOM_PACKAGES_SH: custom-packages.sh
   CUSTOM_CONFIG_SH: custom-config.sh
