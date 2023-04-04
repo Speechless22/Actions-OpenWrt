@@ -1,9 +1,9 @@
-# 添加luci-app-openclash
-git clone --depth 1 --branch master https://github.com/vernesong/OpenClash.git
-mv OpenClash/luci-app-openclash openwrt/package
+# 加载luci-app-openclash
+git clone --depth 1 --branch master https://github.com/vernesong/OpenClash.git OpenClash-master
+mv OpenClash-master/luci-app-openclash $BUILDROOT/package
 
-# 添加luci-app-diskman
-mkdir -p openwrt/package/luci-app-diskman && \
-wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O openwrt/package/luci-app-diskman/Makefile
-mkdir -p openwrt/package/parted && \
-wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O openwrt/package/parted/Makefile
+# 加载luci-app-diskman
+mkdir -p $BUILDROOT/package/luci-app-diskman && \
+wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O $BUILDROOT/package/luci-app-diskman/Makefile
+mkdir -p $BUILDROOT/package/parted && \
+wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O $BUILDROOT/package/parted/Makefile
