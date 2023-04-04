@@ -10,16 +10,16 @@ on:
         default: 'false'
         type: choice
         options:
-        - true: 'Enable SSH connection'
-        - false: 'Disable SSH connection'
+        - true: Enable SSH connection
+        - false: Disable SSH connection
       version:
         description: 'OpenWrt version'
         required: true
         default: 'stable'
         type: choice
         options:
-        - stable: 'OpenWrt stable version'
-        - snapshot: 'OpenWrt snapshot version'
+        - stable: OpenWrt stable version
+        - snapshot: OpenWrt snapshot version
 
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
