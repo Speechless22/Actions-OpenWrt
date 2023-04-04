@@ -8,7 +8,7 @@ gunzip -c OpenClash-core/master/premium/clash-linux-amd64*.gz > $GITHUB_WORKSPAC
 tar xOvz OpenClash-core/master/meta/clash-linux-amd64.tar.gz > $GITHUB_WORKSPACE/openwrt/files/etc/openclash/core/clash_meta
 chmod +x $GITHUB_WORKSPACE/openwrt/files/etc/openclash/core/clash*
 
-# 为luci-app-openclash添加外部数据
+# 为luci-app-openclash添加外部文件
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
 wget -qO- $GEOIP_URL > $GITHUB_WORKSPACE/openwrt/files/etc/openclash/GeoIP.dat
