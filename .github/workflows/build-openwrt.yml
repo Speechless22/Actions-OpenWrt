@@ -18,8 +18,8 @@ on:
         default: 'stable'
         type: choice
         options:
-        - stable: OpenWrt stable version
-        - snapshot: OpenWrt snapshot version
+        - stable
+        - snapshot
 
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
