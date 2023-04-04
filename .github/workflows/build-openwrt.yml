@@ -11,7 +11,7 @@ on:
         type: choice
         options:
         - true
-        - false        
+        - false
       version:
         description: 'OpenWrt version'
         required: true
@@ -58,6 +58,7 @@ jobs:
       run: git clone --branch $REPO_BRANCH $REPO_URL
       
     - name: Select a specific code revision
+      if: github.event.inputs.version == 'stable'
       run: cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
 
     - name: Load custom feeds
@@ -77,7 +78,7 @@ jobs:
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
-      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      if: github.event.inputs.ssh == 'true'
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -93,7 +94,6 @@ jobs:
         echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name: Check space usage
-      if: (!cancelled())
       run: df -hT
 
     - name: Upload bin directory
@@ -105,7 +105,7 @@ jobs:
 
     - name: Organize files
       id: organize
-      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      if: env.UPLOAD_FIRMWARE == 'true'
       run: |
         cd $BUILDROOT/bin/targets/*/*
         rm -rf packages
@@ -114,26 +114,29 @@ jobs:
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+      if: steps.organize.outputs.status == 'success'
       with:
         name: OpenWrt_firmware_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
     - name: Generate release tag
       id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'stable'
       run: |
-        echo "release_version_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)" >> $GITHUB_OUTPUT
-        echo "release_date_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "status=success" >> $GITHUB_OUTPUT
+      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'snapshot'
+      run: |
+        echo "release_tag=SNAPSHOT_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@master
-      if: steps.tag.outputs.status == 'success' && !cancelled()
+      if: steps.tag.outputs.status == 'success'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_version_tag }}_${{ steps.tag.outputs.release_date_tag }}
+        tag_name: ${{ steps.tag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
 
     - name: Delete workflow runs
@@ -144,7 +147,7 @@ jobs:
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: env.UPLOAD_RELEASE == 'true'
       with:
         keep_latest: 3
         delete_tags: true
