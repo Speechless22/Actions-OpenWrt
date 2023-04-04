@@ -8,6 +8,7 @@ on:
         description: 'SSH connection to Actions'
         required: true
         default: false
+        type: choice
         options:
         - true
         - false        
