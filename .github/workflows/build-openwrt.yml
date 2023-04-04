@@ -6,8 +6,14 @@ on:
     inputs:
       ssh:
         description: 'SSH connection to Actions'
-        required: false
+        required: true
         default: 'false'
+        options: ['true', 'false']
+      version:
+        description: 'OpenWrt version'
+        required: true
+        default: 'stable'
+        options: ['stable', 'snapshot']
 
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
