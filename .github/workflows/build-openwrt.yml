@@ -24,6 +24,7 @@ on:
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
+  BUILDROOT: /home/runner/work/Actions-OpenWrt/Actions-OpenWrt/openwrt
   DEPENDENCIES: dependencies-ubuntu.txt
   CUSTOM_FEEDS_SH: custom-feeds.sh
   CUSTOM_PACKAGES_SH: custom-packages.sh
@@ -53,10 +54,8 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         chmod +x custom-*.sh
 
-    - name: Download the sources && Define the buildroot directory
-      run: |
-        git clone --branch $REPO_BRANCH $REPO_URL
-        cd openwrt && echo "BUILDROOT=$PWD" >> $GITHUB_ENV
+    - name: Download the sources
+      run: git clone --branch $REPO_BRANCH $REPO_URL
       
     - name: Select a specific code revision
       if: github.event.inputs.version == 'stable'
