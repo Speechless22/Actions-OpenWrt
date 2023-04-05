@@ -53,18 +53,20 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         chmod +x custom-*.sh
 
-    - name: Download the sources
-      run: git clone --branch $REPO_BRANCH $REPO_URL
+    - name: Download the sources && Define the buildroot directory
+      run: |
+        git clone --branch $REPO_BRANCH $REPO_URL
+        cd openwrt && echo "BUILDROOT=$PWD" >> $GITHUB_ENV
       
     - name: Select a specific code revision
       if: github.event.inputs.version == 'stable'
-      run: cd $GITHUB_WORKSPACE/openwrt && git checkout $(git tag --sort=-creatordate | head -n1)
+      run: cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
 
     - name: Load custom feeds
       run: $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
 
     - name: Update the feeds
-      run: cd $GITHUB_WORKSPACE/openwrt && ./scripts/feeds update -a && ./scripts/feeds install -a
+      run: cd $BUILDROOT && ./scripts/feeds update -a && ./scripts/feeds install -a
 
     - name: Load custom packages
       run: $GITHUB_WORKSPACE/$CUSTOM_PACKAGES_SH
@@ -85,7 +87,7 @@ jobs:
     - name: Build the firmware image
       id: compile
       run: |
-        cd $GITHUB_WORKSPACE/openwrt && echo "$(($(nproc)+1)) thread compile"
+        cd $BUILDROOT && echo "$(($(nproc)+1)) thread compile"
         IGNORE_ERRORS=m make -j$(($(nproc)+1)) defconfig download clean world || IGNORE_ERRORS=m make -j1 defconfig download clean world V=s
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
@@ -100,13 +102,13 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ${{ env.GITHUB_WORKSPACE }}/openwrt/bin
+        path: ${{ env.BUILDROOT }}/bin
 
     - name: Organize files
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true'
       run: |
-        cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+        cd $BUILDROOT/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
@@ -122,7 +124,7 @@ jobs:
       id: stabletag
       if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'stable'
       run: |
-        echo "release_tag=$(cd $GITHUB_WORKSPACE/openwrt && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Generate snapshot Release Tag
