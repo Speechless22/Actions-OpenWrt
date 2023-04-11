@@ -58,8 +58,11 @@ jobs:
       run: git clone --branch $REPO_BRANCH $REPO_URL
       
     - name: Select a specific code revision
+      id: select
       if: github.event.inputs.version == 'stable' || github.event.client_payload.version == 'stable'
-      run: cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
+      run: |
+        cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Load custom feeds
       run: $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
@@ -121,7 +124,7 @@ jobs:
 
     - name: Generate stable Release Tag
       id: stabletag
-      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'stable'
+      if: env.UPLOAD_RELEASE == 'true' && steps.select.outputs.status == 'success'
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
