@@ -2,6 +2,15 @@ name: Build OpenWrt
 
 on:
   repository_dispatch:
+    inputs:
+      version:
+        description: 'OpenWrt version'
+        required: true
+        default: 'stable'
+        type: choice
+        options:
+        - stable
+        - snapshot
   workflow_dispatch:
     inputs:
       ssh:
