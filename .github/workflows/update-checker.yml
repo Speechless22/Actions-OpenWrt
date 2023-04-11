@@ -39,6 +39,7 @@ jobs:
       with:
         token: ${{ secrets.ACTIONS_TRIGGER_PAT }}
         event-type: Source Code Update
+        client-payload: '{"version": "stable"}'
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main

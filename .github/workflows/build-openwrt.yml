@@ -2,15 +2,6 @@ name: Build OpenWrt
 
 on:
   repository_dispatch:
-    inputs:
-      version:
-        description: 'OpenWrt version'
-        required: true
-        default: 'stable'
-        type: choice
-        options:
-        - stable
-        - snapshot
   workflow_dispatch:
     inputs:
       ssh:
@@ -67,7 +58,7 @@ jobs:
       run: git clone --branch $REPO_BRANCH $REPO_URL
       
     - name: Select a specific code revision
-      if: github.event.inputs.version == 'stable'
+      if: github.event.inputs.version == 'stable' || github.event.client_payload.version == 'stable'
       run: cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
 
     - name: Load custom feeds
