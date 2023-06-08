@@ -7,7 +7,7 @@ on:
       ssh:
         description: 'SSH connection to Actions'
         required: true
-        default: false
+        default: 'false'
         type: choice
         options:
         - true
