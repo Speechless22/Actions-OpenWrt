@@ -47,10 +47,10 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo apt-get -qq update && sudo apt-get -qq install $(cat $DEPENDENCIES)
         sudo apt-get -qq autoremove --purge
         sudo apt-get -qq clean
-        sudo rm -rf /usr/share/dotnet
         sudo timedatectl set-timezone "$TZ"
         chmod +x custom-*.sh
         df -hT
