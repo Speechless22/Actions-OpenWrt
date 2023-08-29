@@ -27,9 +27,6 @@ env:
   CUSTOM_PACKAGES_SH: custom-packages.sh
   CUSTOM_CONFIG_SH: custom-config.sh
   CUSTOM_FILES_SH: custom-files.sh
-  UPLOAD_BIN_DIR: true
-  UPLOAD_FIRMWARE: true
-  UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -106,14 +103,13 @@ jobs:
 
     - name: Upload bin directory
       uses: actions/upload-artifact@main
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      if: steps.compile.outputs.status == 'success'
       with:
         name: OpenWrt_bin_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
         path: ${{ env.BUILDROOT }}/bin
 
     - name: Organize files
       id: organize
-      if: env.UPLOAD_FIRMWARE == 'true'
       run: |
         cd $BUILDROOT/bin/targets/*/* && rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
@@ -128,14 +124,14 @@ jobs:
 
     - name: Generate stable Release Tag
       id: stabletag
-      if: env.UPLOAD_RELEASE == 'true' && ( steps.autoselect.outputs.status == 'success' || steps.manualselect.outputs.status == 'success' )
+      if: steps.autoselect.outputs.status == 'success' || steps.manualselect.outputs.status == 'success'
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Generate snapshot Release Tag
       id: snapshottag 
-      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version == 'snapshot'
+      if: github.event.inputs.version == 'snapshot'
       run: |
         echo "release_tag=SNAPSHOT_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
@@ -166,7 +162,6 @@ jobs:
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true'
       with:
         keep_latest: 3
         delete_tags: true
