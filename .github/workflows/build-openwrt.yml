@@ -58,12 +58,16 @@ jobs:
     - name: Auto select a specific code revision
       id: autoselect
       if: github.event.client_payload.version == 'stable'
-      run: cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
+      run: |
+        cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Manual select a specific code revision
       id: manualselect
       if: github.event.inputs.version != 'snapshot'
-      run: cd $BUILDROOT && git checkout ${{ github.event.inputs.version }}
+      run: |
+        cd $BUILDROOT && git checkout ${{ github.event.inputs.version }}
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Load custom feeds
       run: $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
@@ -124,7 +128,7 @@ jobs:
 
     - name: Generate stable Release Tag
       id: stabletag
-      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version != 'snapshot'
+      if: env.UPLOAD_RELEASE == 'true' && steps.autoselect.outputs.status == 'success' || steps.manualselect.outputs.status == 'success'
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
