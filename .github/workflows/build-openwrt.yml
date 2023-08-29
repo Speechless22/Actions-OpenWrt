@@ -15,11 +15,8 @@ on:
       version:
         description: 'OpenWrt version'
         required: true
-        default: 'stable'
-        type: choice
-        options:
-        - stable
-        - snapshot
+        default: 'snapshot'
+        type: string
 
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
@@ -58,12 +55,15 @@ jobs:
     - name: Download the sources
       run: git clone --branch $REPO_BRANCH $REPO_URL
       
-    - name: Select a specific code revision
-      id: select
-      if: github.event.inputs.version == 'stable' || github.event.client_payload.version == 'stable'
-      run: |
-        cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
-        echo "status=success" >> $GITHUB_OUTPUT
+    - name: Auto select a specific code revision
+      id: autoselect
+      if: github.event.client_payload.version == 'stable'
+      run: cd $BUILDROOT && git checkout $(git tag --sort=-creatordate | head -n1)
+
+    - name: Manual select a specific code revision
+      id: manualselect
+      if: github.event.inputs.version != 'snapshot'
+      run: cd $BUILDROOT && git checkout ${{ github.event.inputs.version }}
 
     - name: Load custom feeds
       run: $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
@@ -124,7 +124,7 @@ jobs:
 
     - name: Generate stable Release Tag
       id: stabletag
-      if: env.UPLOAD_RELEASE == 'true' && steps.select.outputs.status == 'success'
+      if: env.UPLOAD_RELEASE == 'true' && github.event.inputs.version != 'snapshot'
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
