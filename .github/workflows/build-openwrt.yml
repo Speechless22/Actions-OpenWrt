@@ -128,7 +128,7 @@ jobs:
 
     - name: Generate stable Release Tag
       id: stabletag
-      if: env.UPLOAD_RELEASE == 'true' && steps.autoselect.outputs.status == 'success' || steps.manualselect.outputs.status == 'success'
+      if: env.UPLOAD_RELEASE == 'true' && ( steps.autoselect.outputs.status == 'success' || steps.manualselect.outputs.status == 'success' )
       run: |
         echo "release_tag=$(cd $BUILDROOT && git describe --tags --abbrev=0 --exact-match)_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
