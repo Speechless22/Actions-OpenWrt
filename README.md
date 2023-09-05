@@ -4,17 +4,18 @@
 
 Building OpenWrt with GitHub Actions
 
-## 准备
+## Prepare
 
-- 用custom-feeds.sh编辑feeds.conf.default
-- 用custom-packages.sh添加软件包到$BUILDROOT/package
-- 用custom-config.sh编辑.config
-- 用custom-files.sh预置文件到固件
+- Edit feeds.conf.default using custom-feeds.sh
+- Use custom-packages.sh to add load to $BUILDROOT/package
+- Edit .config using custom-config.sh
+- Use custom-files.sh to configure the file to the firmware
 
-## 使用
+## Use
 
-- 自动触发编译：每天检查一次官方Releases Tag，如果有新Tag则触发编译
-- 手动触发编译：在Actions页面选择Build OpenWrt（可在OpenWrt version选项中输入要使用的Releases Tag），点击Run workflow
+- Automatically trigger compilation: check the officially released Tags once a day, and trigger compilation if there are new Tags
+- Manually trigger compilation: Select Build OpenWrt on the Actions page (you can enter the Releases Tag to be used in the OpenWrt version option), and click Run Workflow
+
 ## Tips
 
 - Before create repository to build your own firmware, you may check out if others have already built it which meet your needs by simply [search `Actions-Openwrt` in GitHub](https://github.com/search?q=Actions-openwrt).
