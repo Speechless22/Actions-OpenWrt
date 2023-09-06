@@ -26,7 +26,6 @@ env:
   CUSTOM_FEEDS_SH: custom-feeds.sh
   CUSTOM_PACKAGES_SH: custom-packages.sh
   CUSTOM_CONFIG_SH: custom-config.sh
-  CUSTOM_FILES_SH: custom-files.sh
   TZ: Asia/Shanghai
 
 jobs:
@@ -74,9 +73,6 @@ jobs:
 
     - name: Load custom packages
       run: $GITHUB_WORKSPACE/$CUSTOM_PACKAGES_SH
-
-    - name: Load custom files
-      run: $GITHUB_WORKSPACE/$CUSTOM_FILES_SH
 
     - name: Configure the firmware image
       run: $GITHUB_WORKSPACE/$CUSTOM_CONFIG_SH
