@@ -33,6 +33,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Maximize build disk space
+      uses: easimon/maximize-build-space@master
+      with:
+        remove-dotnet: true
+        remove-android: true
+        remove-haskell: true
+        remove-codeql: true
+        remove-docker-images: true
+
     - name: Checkout
       uses: actions/checkout@main
 
@@ -40,7 +49,6 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo apt-get -qq update && sudo apt-get -qq install $(cat $DEPENDENCIES)
         sudo apt-get -qq autoremove --purge
         sudo apt-get -qq clean
