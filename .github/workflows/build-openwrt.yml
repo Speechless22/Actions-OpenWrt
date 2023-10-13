@@ -33,15 +33,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Maximize build disk space
-      uses: easimon/maximize-build-space@master
-      with:
-        remove-dotnet: true
-        remove-android: true
-        remove-haskell: true
-        remove-codeql: true
-        remove-docker-images: true
-
     - name: Checkout
       uses: actions/checkout@main
 
@@ -54,7 +45,6 @@ jobs:
         sudo apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         chmod +x custom-*.sh
-        df -hT
 
     - name: Download the sources
       run: git clone --branch $REPO_BRANCH $REPO_URL
@@ -91,7 +81,16 @@ jobs:
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-               
+
+    - name: Maximize build disk space
+      uses: easimon/maximize-build-space@master
+      with:
+        remove-dotnet: true
+        remove-android: true
+        remove-haskell: true
+        remove-codeql: true
+        remove-docker-images: true
+
     - name: Build the firmware image
       id: compile
       run: |
