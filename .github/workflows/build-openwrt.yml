@@ -145,7 +145,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: OpenWrt Firmware
         tag_name: ${{ steps.stabletag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
 
@@ -155,7 +154,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: OpenWrt Firmware
         tag_name: ${{ steps.snapshottag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
 
