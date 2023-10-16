@@ -6,9 +6,9 @@ Building OpenWrt with GitHub Actions
 
 ## Prepare
 
-- Edit feeds.conf.default using custom-feeds.sh
+- Edit $BUILDROOT/feeds.conf.default using custom-feeds.sh
 - Use custom-packages.sh to add load to $BUILDROOT/package
-- Edit .config using custom-config.sh
+- Edit $BUILDROOT/.config using custom-config.sh
 
 ## Use
 
