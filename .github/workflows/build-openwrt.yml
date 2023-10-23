@@ -115,6 +115,7 @@ jobs:
       id: organize
       run: |
         cd $BUILDROOT/bin/targets/*/* && rm -rf packages
+        sed '1i\### SHA256SUMS' sha256sums > SHA256SUMS
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -147,6 +148,7 @@ jobs:
       with:
         tag_name: ${{ steps.stabletag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
+        body_path: ${{ env.FIRMWARE }}/SHA256SUMS
 
     - name: Upload snapshot firmware to Release
       uses: softprops/action-gh-release@master
@@ -156,6 +158,7 @@ jobs:
       with:
         tag_name: ${{ steps.snapshottag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
+        body_path: ${{ env.FIRMWARE }}/SHA256SUMS
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
