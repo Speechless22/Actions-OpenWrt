@@ -33,9 +33,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
-
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -44,11 +41,22 @@ jobs:
         sudo apt-get -qq autoremove --purge
         sudo apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
-        chmod +x custom-*.sh
+
+    - name: Maximize build disk space
+      uses: easimon/maximize-build-space@master
+      with:
+        remove-dotnet: true
+        remove-android: true
+        remove-haskell: true
+        remove-codeql: true
+        remove-docker-images: true
+
+    - name: Checkout
+      uses: actions/checkout@main
 
     - name: Download the sources
       run: git clone --branch $REPO_BRANCH $REPO_URL
-      
+
     - name: Auto select a specific code revision
       id: autoselect
       if: github.event.client_payload.version == 'stable'
@@ -63,17 +71,13 @@ jobs:
         cd $BUILDROOT && git checkout ${{ github.event.inputs.version }}
         echo "status=success" >> $GITHUB_OUTPUT
 
-    - name: Load custom feeds
-      run: $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
-
-    - name: Update the feeds
-      run: cd $BUILDROOT && ./scripts/feeds update -a && ./scripts/feeds install -a
-
-    - name: Load custom packages
-      run: $GITHUB_WORKSPACE/$CUSTOM_PACKAGES_SH
-
-    - name: Configure the firmware image
-      run: $GITHUB_WORKSPACE/$CUSTOM_CONFIG_SH
+    - name: Load custom
+      run: |
+        chmod +x custom-*.sh
+        $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
+        $BUILDROOT/scripts/feeds update -a && $BUILDROOT/scripts/feeds install -a
+        $GITHUB_WORKSPACE/$CUSTOM_PACKAGES_SH
+        $GITHUB_WORKSPACE/$CUSTOM_CONFIG_SH
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
@@ -81,15 +85,6 @@ jobs:
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-    - name: Maximize build disk space
-      uses: easimon/maximize-build-space@master
-      with:
-        remove-dotnet: true
-        remove-android: true
-        remove-haskell: true
-        remove-codeql: true
-        remove-docker-images: true
 
     - name: Build the firmware image
       id: compile
