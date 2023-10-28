@@ -6,6 +6,7 @@ echo 'CONFIG_TARGET_x86_64_DEVICE_generic=y' >> $BUILDROOT/.config
 # 自定义固件基础
 echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> $BUILDROOT/.config
 echo 'CONFIG_PACKAGE_luci=y' >> $BUILDROOT/.config
+echo 'CONFIG_PACKAGE_luci-ssl-openssl=y' >> $BUILDROOT/.config
 echo 'CONFIG_PACKAGE_git-http=y' >> $BUILDROOT/.config
 echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=3072' >> $BUILDROOT/.config
 
