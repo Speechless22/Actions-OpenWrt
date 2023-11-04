@@ -74,10 +74,10 @@ jobs:
     - name: Load custom
       run: |
         chmod +x custom-*.sh
-        $GITHUB_WORKSPACE/$CUSTOM_FEEDS_SH
+        $CUSTOM_FEEDS_SH
         $BUILDROOT/scripts/feeds update -a && $BUILDROOT/scripts/feeds install -a
-        $GITHUB_WORKSPACE/$CUSTOM_PACKAGES_SH
-        $GITHUB_WORKSPACE/$CUSTOM_CONFIG_SH
+        $CUSTOM_PACKAGES_SH
+        $CUSTOM_CONFIG_SH
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
