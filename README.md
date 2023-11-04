@@ -13,7 +13,7 @@ Building OpenWrt with GitHub Actions
 ## Use
 
 - Automatically trigger compilation: check the officially released Tags once a day, and trigger compilation if there are new Tags
-- Manually trigger compilation: Select Build OpenWrt on the Actions page (you can enter the Releases Tag to be used in the OpenWrt version option), and click Run Workflow
+- Manually trigger compilation: Select Build OpenWrt on the Actions page (you can enter the [Releases Tag](https://git.openwrt.org/openwrt/openwrt.git/tags) to be used in the OpenWrt version option), and click Run Workflow
 
 ## Tips
 
