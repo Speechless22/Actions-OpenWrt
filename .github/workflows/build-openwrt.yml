@@ -21,11 +21,11 @@ on:
 env:
   REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
   REPO_BRANCH: master
-  BUILDROOT: /home/runner/work/Actions-OpenWrt/Actions-OpenWrt/openwrt
-  DEPENDENCIES: dependencies-ubuntu.txt
-  CUSTOM_FEEDS_SH: custom-feeds.sh
-  CUSTOM_PACKAGES_SH: custom-packages.sh
-  CUSTOM_CONFIG_SH: custom-config.sh
+  BUILDROOT: ${{ github.workspace }}/openwrt
+  DEPENDENCIES: ${{ github.workspace }}/dependencies-ubuntu.txt
+  CUSTOM_FEEDS_SH: ${{ github.workspace }}/custom-feeds.sh
+  CUSTOM_PACKAGES_SH: ${{ github.workspace }}/custom-packages.sh
+  CUSTOM_CONFIG_SH: ${{ github.workspace }}/custom-config.sh
   TZ: Asia/Shanghai
 
 jobs:
