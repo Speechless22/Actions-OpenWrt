@@ -107,7 +107,7 @@ jobs:
       id: organize
       run: |
         cd $BUILDROOT/bin/targets/*/* && rm -rf packages
-        sed '1i\### SHA256SUMS' sha256sums > $BUILDROOT/SHA256SUMS
+        { echo '### SHA256SUMS'; echo '```txt'; cat sha256sums; echo '```'; } > $BUILDROOT/SHA256SUMS
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
