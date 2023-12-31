@@ -1,4 +1,4 @@
-# 利用make defconfig生成基础.config文件
+# 利用make defconfig可生成完整.config文件
 echo 'CONFIG_TARGET_x86=y' >> $BUILDROOT/.config
 echo 'CONFIG_TARGET_x86_64=y' >> $BUILDROOT/.config
 echo 'CONFIG_TARGET_x86_64_DEVICE_generic=y' >> $BUILDROOT/.config
