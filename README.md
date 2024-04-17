@@ -9,6 +9,7 @@ Building OpenWrt with GitHub Actions
 - Edit `$BUILDROOT/feeds.conf.default` using `custom-feeds.sh`
 - Use `custom-packages.sh` to add load to `$BUILDROOT/package`
 - Edit `$BUILDROOT/.config` using `custom-config.sh`
+- Enabling a workflow([Disabling and enabling a workflow](https://docs.github.com/en/actions/using-workflows/disabling-and-enabling-a-workflow))
 
 ## Use
 
