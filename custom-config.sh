@@ -1,10 +1,15 @@
 # Use "make defconfig" to generate a complete .config file
 
 # Custom firmware base
-echo 'CONFIG_TARGET_x86=y' >> $BUILDROOT/.config
-echo 'CONFIG_TARGET_x86_64=y' >> $BUILDROOT/.config
-echo 'CONFIG_TARGET_x86_64_DEVICE_generic=y' >> $BUILDROOT/.config
-echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=3072' >> $BUILDROOT/.config
+# echo 'CONFIG_TARGET_x86=y' >> $BUILDROOT/.config
+# echo 'CONFIG_TARGET_x86_64=y' >> $BUILDROOT/.config
+# echo 'CONFIG_TARGET_x86_64_DEVICE_generic=y' >> $BUILDROOT/.config
+# echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=3072' >> $BUILDROOT/.config
+
+echo 'CONFIG_TARGET_mediatek=y' >> $BUILDROOT/.config
+echo 'CONFIG_TARGET_mediatek_filogic=y' >> $BUILDROOT/.config
+echo 'CONFIG_TARGET_mediatek_filogic_DEVICE_bananapi_bpi-r3-mini=y' >> $BUILDROOT/.config
+echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=7168' >> $BUILDROOT/.config
 
 # Lanuage Setting
 echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> $BUILDROOT/.config

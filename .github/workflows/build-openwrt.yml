@@ -19,7 +19,7 @@ on:
         type: string
 
 env:
-  REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
+  REPO_URL: https://github.com/immortalwrt/immortalwrt.git
   REPO_BRANCH: master
   BUILDROOT: ${{ github.workspace }}/openwrt
   DEPENDENCIES: ${{ github.workspace }}/dependencies-ubuntu.txt
