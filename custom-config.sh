@@ -20,9 +20,9 @@ echo 'CONFIG_PACKAGE_luci-compat=y' >> $BUILDROOT/.config
 echo 'CONFIG_PACKAGE_wget-ssl=y' >> $BUILDROOT/.config
 
 # Add Docker
-echo 'CONFIG_PACKAGE_luci-app-dockerman=y' >> $BUILDROOT/.config
-echo 'CONFIG_PACKAGE_dockerd=y' >> $BUILDROOT/.config
-echo 'CONFIG_PACKAGE_docker-compose=y' >> $BUILDROOT/.config
+# echo 'CONFIG_PACKAGE_luci-app-dockerman=y' >> $BUILDROOT/.config
+# echo 'CONFIG_PACKAGE_dockerd=y' >> $BUILDROOT/.config
+# echo 'CONFIG_PACKAGE_docker-compose=y' >> $BUILDROOT/.config
 
 # Add other apps
 echo 'CONFIG_PACKAGE_luci=y' >> $BUILDROOT/.config

@@ -43,6 +43,13 @@ jobs:
         sudo apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
 
+    - name: Setup Ruby, JRuby and TruffleRuby
+      uses: ruby/setup-ruby@v1.190.0
+      with:
+        ruby-version: '3.2' # Not needed with a .ruby-version file
+    - run: bundle install
+    - run: bundle exec rake
+
     - name: Maximize build disk space
       uses: easimon/maximize-build-space@master
       with:
