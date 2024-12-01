@@ -13,6 +13,9 @@ echo 'CONFIG_TARGET_mediatek_filogic_DEVICE_bananapi_bpi-r3-mini=y' >> $BUILD_RO
 # Lanuage Setting
 echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> $BUILD_ROOT/.config
 
+# Add Diskman
+echo 'CONFIG_PACKAGE_luci-app-diskman=y' >> $BUILD_ROOT/.config
+
 # Add OpenClash
 echo '# CONFIG_PACKAGE_dnsmasq is not set' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_luci-app-openclash=y' >> $BUILD_ROOT/.config
