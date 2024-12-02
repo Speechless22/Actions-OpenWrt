@@ -4,7 +4,10 @@ git clone --depth 1 --branch master https://github.com/Speechless22/OpenClash.gi
 mv OpenClash/luci-app-openclash $BUILD_ROOT/package
 
 # Load luci-app-diskman
-mkdir -p $BUILD_ROOT/package/luci-app-diskman && \
-wget https://raw.githubusercontent.com/Speechless22/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O $BUILD_ROOT/package/luci-app-diskman/Makefile
-mkdir -p $BUILD_ROOT/package/parted && \
-wget https://raw.githubusercontent.com/Speechless22/luci-app-diskman/master/Parted.Makefile -O $BUILD_ROOT/package/parted/Makefile
+# mkdir -p $BUILD_ROOT/package/luci-app-diskman && \
+# wget https://raw.githubusercontent.com/Speechless22/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O $BUILD_ROOT/package/luci-app-diskman/Makefile
+# mkdir -p $BUILD_ROOT/package/parted && \
+# wget https://raw.githubusercontent.com/Speechless22/luci-app-diskman/master/Parted.Makefile -O $BUILD_ROOT/package/parted/Makefile
+
+git clone --depth 1 --branch master https://github.com/Speechless22/luci-app-diskman.git
+mv luci-app-diskman/applications/luci-app-diskman $BUILD_ROOT/package
