@@ -102,7 +102,7 @@ jobs:
       if: steps.compile.outputs.status == 'success'
       with:
         name: OpenWrt_bin_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ${{ env.BUILDROOT }}/bin
+        path: ${{ env.BUILD_ROOT }}/bin
 
     - name: Organize files
       id: organize
@@ -141,7 +141,7 @@ jobs:
       with:
         tag_name: ${{ steps.stabletag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
-        body_path: ${{ env.BUILDROOT }}/SHA256SUMS
+        body_path: ${{ env.BUILD_ROOT }}/SHA256SUMS
 
     - name: Upload snapshot firmware to Release
       uses: softprops/action-gh-release@master
@@ -151,7 +151,7 @@ jobs:
       with:
         tag_name: ${{ steps.snapshottag.outputs.release_tag }}
         files: ${{ env.FIRMWARE }}/*
-        body_path: ${{ env.BUILDROOT }}/SHA256SUMS
+        body_path: ${{ env.BUILD_ROOT }}/SHA256SUMS
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
