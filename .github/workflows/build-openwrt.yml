@@ -67,7 +67,7 @@ jobs:
 
     - name: Manual select a specific code revision
       id: manualselect
-      if: github.event.inputs.version != 'snapshot'
+      if: github.event.inputs.version != null && github.event.inputs.version != 'snapshot'
       run: |
         cd $BUILD_ROOT && git checkout ${{ github.event.inputs.version }}
         echo "status=success" >> $GITHUB_OUTPUT
