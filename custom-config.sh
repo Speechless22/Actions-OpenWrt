@@ -9,6 +9,7 @@
 echo 'CONFIG_TARGET_mediatek=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_TARGET_mediatek_filogic=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_TARGET_mediatek_filogic_DEVICE_bananapi_bpi-r3-mini=y' >> $BUILD_ROOT/.config
+echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=4096' >> $BUILD_ROOT/.config
 
 # Lanuage Setting
 echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> $BUILD_ROOT/.config
