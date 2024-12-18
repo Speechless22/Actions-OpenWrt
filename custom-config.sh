@@ -34,5 +34,8 @@ echo 'CONFIG_PACKAGE_docker-compose=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_luci=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_luci-ssl=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_luci-app-wol=y' >> $BUILD_ROOT/.config
+
 echo 'CONFIG_PACKAGE_luci-app-aria2=y' >> $BUILD_ROOT/.config
+echo 'CONFIG_PACKAGE_ariang=y' >> $BUILD_ROOT/.config
+
 echo 'CONFIG_PACKAGE_luci-app-samba4=y' >> $BUILD_ROOT/.config
