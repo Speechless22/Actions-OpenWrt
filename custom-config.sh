@@ -15,6 +15,7 @@ echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=4096' >> $BUILD_ROOT/.config
 echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> $BUILD_ROOT/.config
 
 # Disk Support
+echo 'CONFIG_PACKAGE_kmod-nvme=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_fdisk=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_block-mount=y' >> $BUILD_ROOT/.config
 
