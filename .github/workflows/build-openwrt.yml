@@ -27,6 +27,9 @@ env:
   CUSTOM_PACKAGES_SH: ${{ github.workspace }}/custom-packages.sh
   CUSTOM_CONFIG_SH: ${{ github.workspace }}/custom-config.sh
   TZ: Asia/Shanghai
+  DEVICE_NAME: unknown
+  FILE_DATE: unknown
+  FIRMWARE: unknown
 
 jobs:
   build:
@@ -154,15 +157,17 @@ jobs:
         body_path: ${{ env.BUILD_ROOT }}/SHA256SUMS
 
     - name: Delete workflow runs
+      if: always()
       uses: Mattraks/delete-workflow-runs@main
       with:
-        retain_days: 1
-        keep_minimum_runs: 3
+        retain_days: 3
+        keep_minimum_runs: 5
 
     - name: Remove old Releases
+      if: always()
       uses: dev-drprasad/delete-older-releases@master
       with:
-        keep_latest: 3
+        keep_latest: 5
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
