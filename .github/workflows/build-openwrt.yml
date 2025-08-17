@@ -10,8 +10,8 @@ on:
         default: 'false'
         type: choice
         options:
-        - true
-        - false
+        - "true"
+        - "false"
       version:
         description: 'OpenWrt version'
         required: true
@@ -26,6 +26,7 @@ env:
   CUSTOM_FEEDS_SH: ${{ github.workspace }}/custom-feeds.sh
   CUSTOM_PACKAGES_SH: ${{ github.workspace }}/custom-packages.sh
   CUSTOM_CONFIG_SH: ${{ github.workspace }}/custom-config.sh
+  PREBUILD_MISC_SH: ${{ github.workspace }}/prebuild-misc.sh
   TZ: Asia/Shanghai
   DEVICE_NAME: unknown
   FILE_DATE: unknown
@@ -82,6 +83,7 @@ jobs:
         $BUILD_ROOT/scripts/feeds update -a && $BUILD_ROOT/scripts/feeds install -a
         $CUSTOM_PACKAGES_SH
         $CUSTOM_CONFIG_SH
+        $PREBUILD_MISC_SH
 
     - name: Start SSH via tmate
       uses: rdp-studio/ssh2actions@main
