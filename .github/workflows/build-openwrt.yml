@@ -78,7 +78,7 @@ jobs:
 
     - name: Load custom
       run: |
-        chmod +x custom-*.sh
+        chmod +x *.sh
         $CUSTOM_FEEDS_SH
         $BUILD_ROOT/scripts/feeds update -a && $BUILD_ROOT/scripts/feeds install -a
         $CUSTOM_PACKAGES_SH
