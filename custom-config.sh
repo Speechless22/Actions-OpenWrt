@@ -8,8 +8,8 @@
 
 echo 'CONFIG_TARGET_mediatek=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_TARGET_mediatek_filogic=y' >> $BUILD_ROOT/.config
-echo 'CONFIG_TARGET_mediatek_filogic_DEVICE_bananapi_bpi-r3-mini=y' >> $BUILD_ROOT/.config
-echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=4096' >> $BUILD_ROOT/.config
+echo 'CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_glinet_gl-mt3000=y' >> $BUILD_ROOT/.config
+echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=500' >> $BUILD_ROOT/.config
 
 # Lanuage Setting
 echo 'CONFIG_LUCI_LANG_zh_Hans=y' >> $BUILD_ROOT/.config
@@ -29,9 +29,9 @@ echo 'CONFIG_PACKAGE_luci-compat=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_PACKAGE_wget-ssl=y' >> $BUILD_ROOT/.config
 
 # Add Docker
-echo 'CONFIG_PACKAGE_luci-app-dockerman=y' >> $BUILD_ROOT/.config
-echo 'CONFIG_PACKAGE_dockerd=y' >> $BUILD_ROOT/.config
-echo 'CONFIG_PACKAGE_docker-compose=y' >> $BUILD_ROOT/.config
+# echo 'CONFIG_PACKAGE_luci-app-dockerman=y' >> $BUILD_ROOT/.config
+# echo 'CONFIG_PACKAGE_dockerd=y' >> $BUILD_ROOT/.config
+# echo 'CONFIG_PACKAGE_docker-compose=y' >> $BUILD_ROOT/.config
 
 # Add other apps
 echo 'CONFIG_PACKAGE_luci=y' >> $BUILD_ROOT/.config
