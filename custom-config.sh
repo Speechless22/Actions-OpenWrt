@@ -8,7 +8,7 @@
 
 echo 'CONFIG_TARGET_mediatek=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_TARGET_mediatek_filogic=y' >> $BUILD_ROOT/.config
-echo 'CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_glinet_gl-mt3000=y' >> $BUILD_ROOT/.config
+echo 'CONFIG_TARGET_mediatek_filogic_DEVICE_glinet_gl-mt3000=y' >> $BUILD_ROOT/.config
 echo 'CONFIG_TARGET_ROOTFS_PARTSIZE=224' >> $BUILD_ROOT/.config
 
 # Lanuage Setting
